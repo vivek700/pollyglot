@@ -1,0 +1,89 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins";
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  background-image: url("assets/worldmap.png");
+  height: 200px;
+
+  h1 {
+    color: #32CD32;
+    font-family: "Big Shoulders";
+    font-size: 3rem;
+  }
+
+  p {
+    color: white;
+    font-weight: 600;
+  }
+
+  img {
+    display: block;
+    width: 7em;
+    height: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 2em 1em;
+  border: 5px black solid;
+  border-radius: 15px;
+
+  h2 {
+    font-weight: 700;
+    margin-block: 1em;
+  }
+
+  label {
+    font-weight: 700;
+  }
+
+  textarea {
+    padding: 10px;
+    max-width: 100%;
+    width: 800px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: none;
+    background-color: #d9d9d9;
+    resize: none;
+
+  }
+
+  button {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white;
+    background-color: #035A9D;
+    border: none;
+    border-radius: 5px;
+    width: 800px;
+    height: 50px;
+    margin-block: 2em;
+  }
+
+  .language-radio-btns {
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.5rem;
+    min-width: 800px;
+  }
+
+}
