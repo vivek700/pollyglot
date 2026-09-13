@@ -4,29 +4,24 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"os"
-	"strconv"
 	"time"
 
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/openai/openai-go/v3"
 )
 
 type Server struct {
-	port   int
-	logger *slog.Logger
+	port    int
+	logger  *slog.Logger
+	client  openai.Client
+	aiModel string
 }
 
-func NewServer(logger *slog.Logger) *http.Server {
-
-	port, err := strconv.Atoi(os.Getenv("PORT"))
-	if err != nil {
-		logger.Error("Invalid or missing port", "err", err)
-		os.Exit(1)
-	}
-
+func NewServer(logger *slog.Logger, port int, client openai.Client, aiModel string) *http.Server {
 	newServer := &Server{
-		port:   port,
-		logger: logger,
+		port:    port,
+		logger:  logger,
+		client:  client,
+		aiModel: aiModel,
 	}
 
 	server := &http.Server{

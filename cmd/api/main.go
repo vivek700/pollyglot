@@ -6,9 +6,13 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
+	_ "github.com/joho/godotenv/autoload"
+	"github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
 	"github.com/pollyglot/internal/server"
 )
 
@@ -16,7 +20,24 @@ func main() {
 
 	logger := initLogger()
 
-	srv := server.NewServer(logger)
+	port, err := strconv.Atoi(os.Getenv("PORT"))
+	if err != nil {
+		logger.Error("Invalid or missing port", "err", err)
+		os.Exit(1)
+	}
+
+	apiKey := os.Getenv("AI_KEY")
+	baseUrl := os.Getenv("AI_URL")
+	aiModel := os.Getenv("AI_MODEL")
+
+	if apiKey == "" || baseUrl == "" || aiModel == "" {
+		logger.Error("Missing api key or base url or ai model")
+		os.Exit(1)
+	}
+
+	client := openai.NewClient(option.WithAPIKey(apiKey), option.WithBaseURL(baseUrl))
+
+	srv := server.NewServer(logger, port, client, aiModel)
 
 	done := make(chan struct{})
 

@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/pollyglot/internal/translate"
 	"github.com/pollyglot/web"
 )
 
@@ -12,9 +13,12 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	mux := http.NewServeMux()
 
+	svc := &translate.Service{Logger: s.logger, Client: s.client, AIModel: s.aiModel}
+
 	//Routes
 	mux.HandleFunc("/", s.HelloWorldHandler)
 	mux.Handle("/app/", http.StripPrefix("/app/", http.FileServer(http.FS(web.Files))))
+	mux.HandleFunc("POST /api/translate", svc.Translate)
 
 	return requestLoggerMiddleware(s.logger)(mux)
 }
